@@ -9,7 +9,7 @@ Any one of the above providers is enough to get current location of the user or 
 **TECHNOLOGIES**: Android SDK
 **LANGUAGES**: KOTLIN, JAVA
 **API LEVEL**: API 21 (LOLLIPOP)
-**SAMPLE ANDROID APP: GPS-LOCATION-FINDER**: This example provides current location update using GPS provider. Entire Android app code is as follows, 
+**SAMPLE ANDROID APP: GPS-LOCATION-FINDER**: This example provides current location update using GPS provider. Entire Android app code is as follows.
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -27,8 +27,8 @@ import androidx.core.content.ContextCompat;
 
 public class MainActivity extends Activity implements LocationListener {
 
-    protected LocationManager locationManager;
-    TextView txtLat;
+    private LocationManager locationManager;
+    private TextView txtLat;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
 
@@ -42,7 +42,6 @@ public class MainActivity extends Activity implements LocationListener {
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // Request permission if not granted
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         } else {
             startLocationUpdates();
@@ -57,7 +56,9 @@ public class MainActivity extends Activity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        txtLat.setText("Latitude: " + location.getLatitude() + "\nLongitude: " + location.getLongitude());
+        if (location != null) {
+            txtLat.setText("Latitude: " + location.getLatitude() + "\nLongitude: " + location.getLongitude());
+        }
     }
 
     @Override
@@ -106,3 +107,6 @@ public class MainActivity extends Activity implements LocationListener {
 
     </application>
 </manifest>
+
+
+
